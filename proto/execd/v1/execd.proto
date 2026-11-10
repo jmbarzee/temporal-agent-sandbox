@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package execd.v1;
+
+import "google/protobuf/duration.proto";
+
+option go_package = "github.com/jmbarzee/temporal-agent-sandbox/gen/execd/v1;execdv1";
+
+// Command is the one message the sidecar sends on a connection, length-delimited;
+// Result is the one execd sends back.
+message Command {
+  // command runs as sh -c in execd's working directory.
+  string command = 1;
+  // timeout kills the command and its process group.
+  google.protobuf.Duration timeout = 2;
+}
+
+message Result {
+  // output is stdout and stderr together, cut at execd's cap.
+  bytes output = 1;
+  bool truncated = 2;
+  int32 exit_code = 3;
+}

@@ -1,0 +1,19 @@
+# The sandboxes worker sets every empty value.
+sandboxId: ""
+taskQueue: ""
+repos: []
+namespace: ""
+images:
+  sandbox: alpine:3.23
+  sidecar: ""
+  # The sidecar image is built locally; IfNotPresent keeps the kubelet from
+  # looking for it on Docker Hub.
+  pullPolicy: IfNotPresent
+uids:
+  sandbox: 1000
+  sidecar: 1001
+temporal:
+  address: ""
+  namespace: ""
+# Bounds the sidecar's shutdown once the pod is deleted.
+terminationGracePeriodSeconds: 60

@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+package sandbox.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "temporal/v1/temporal.proto";
+
+option go_package = "github.com/jmbarzee/temporal-agent-sandbox/gen/sandbox/v1;sandboxv1";
+
+// Sandboxes is the provider boundary. Holders reach it only through the
+// Request, LeaseRequest and LeaseRelease signals and the RunTool activity on the
+// sandbox's own queue; it answers on the holder's signals.
+service Sandboxes {
+  option (temporal.v1.service) = {task_queue: "sandboxes"};
+
+  // SandboxOrchestrator is the singleton that creates sandboxes.
+  rpc SandboxOrchestrator(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (temporal.v1.workflow) = {
+      name: "sandbox.v1.SandboxOrchestrator"
+      id: 'sandboxes'
+      signal: {ref: "Request"}
+    };
+  }
+
+  // Sandbox is the sole authority over one pod. The pod is created
+  // immediately, ownerless, and lives until grace past the latest lease, or
+  // grace past ready if no lease ever arrives. If creation fails it deletes
+  // whatever it made and fails.
+  rpc Sandbox(SandboxInput) returns (google.protobuf.Empty) {
+    option (temporal.v1.workflow) = {
+      name: "sandbox.v1.Sandbox"
+      id: 'sandbox/${! sandboxId }'
+      signal: {ref: "LeaseRequest"}
+      signal: {ref: "LeaseRelease"}
+      query: {ref: "GetLease"}
+    };
+  }
+
+  // Request asks for a new sandbox.
+  rpc Request(RequestInput) returns (google.protobuf.Empty) {
+    option (temporal.v1.signal) = {};
+  }
+
+  // LeaseRequest serves acquire and extend alike. Granted once the pod is ready,
+  // when no live lease exists or the requester owns it; otherwise denied.
+  rpc LeaseRequest(LeaseRequestInput) returns (google.protobuf.Empty) {
+    option (temporal.v1.signal) = {};
+  }
+
+  // LeaseRelease clears the lease if the requester owns it.
+  rpc LeaseRelease(LeaseReleaseInput) returns (google.protobuf.Empty) {
+    option (temporal.v1.signal) = {};
+  }
+
+  rpc GetLease(google.protobuf.Empty) returns (GetLeaseOutput) {
+    option (temporal.v1.query) = {};
+  }
+
+  // RunTool runs on the pod's sidecar worker, which hands the command to the
+  // sandbox container. Callers route each call to the sandbox's own queue,
+  // "sandbox-{sandboxId}".
+  rpc RunTool(RunToolInput) returns (RunToolOutput) {
+    option (temporal.v1.activity) = {
+      name: "sandbox.v1.RunTool"
+      task_queue: "sandbox"
+      schedule_to_start_timeout: {seconds: 60}
+      start_to_close_timeout: {seconds: 1800}
+      retry_policy: {max_attempts: 1}
+    };
+  }
+}
+
+message Identity {
+  string workflow_id = 1;
+}
+
+message Asset {
+  string repo = 1;
+}
+
+message Assets {
+  repeated Asset assets = 1;
+}
+
+message Lease {
+  string sandbox_id = 1;
+  Identity owner = 2;
+  google.protobuf.Timestamp expiry = 3;
+  // renew_before is how long before expiry a holder should ask again.
+  google.protobuf.Duration renew_before = 4;
+  // task_queue is where the holder sends RunTool calls.
+  string task_queue = 5;
+}
+
+message SandboxInput {
+  string sandbox_id = 1;
+  Assets assets = 2;
+}
+
+message RequestInput {
+  Identity requester = 1;
+  Assets assets = 2;
+}
+
+message LeaseRequestInput {
+  Identity requester = 1;
+}
+
+message LeaseReleaseInput {
+  Identity requester = 1;
+}
+
+message GetLeaseOutput {
+  Lease lease = 1;
+}
+
+message ToolCall {
+  string id = 1;
+  string name = 2;
+  // input is the call's JSON arguments.
+  string input = 3;
+}
+
+message ToolOutput {
+  string tool_call_id = 1;
+  string output = 2;
+  int32 exit_code = 3;
+}
+
+message RunToolInput {
+  ToolCall call = 1;
+}
+
+message RunToolOutput {
+  ToolOutput output = 1;
+}

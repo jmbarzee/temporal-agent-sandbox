@@ -1,0 +1,64 @@
+{{- $socket := "/execd/execd.sock" }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sandbox-{{ .Values.sandboxId }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: sandbox
+    temporal-agent-sandbox/sandbox-id: {{ .Values.sandboxId | quote }}
+spec:
+  restartPolicy: Never
+  # The sandbox runs model-chosen commands; it gets no cluster identity.
+  automountServiceAccountToken: false
+  terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+  volumes:
+    - name: workspace
+      emptyDir: {}
+    - name: execd
+      emptyDir: {}
+  initContainers:
+    - name: execd
+      image: {{ .Values.images.sidecar }}
+      imagePullPolicy: {{ .Values.images.pullPolicy }}
+      command: ["cp", "/bin/execd", "/execd/execd"]
+      volumeMounts:
+        - name: execd
+          mountPath: /execd
+  containers:
+    - name: sandbox
+      image: {{ .Values.images.sandbox }}
+      imagePullPolicy: {{ .Values.images.pullPolicy }}
+      command: ["/execd/execd", "-socket", {{ $socket | quote }}, "-client-uid", {{ .Values.uids.sidecar | quote }}]
+      workingDir: /workspace
+      securityContext:
+        runAsUser: {{ .Values.uids.sandbox }}
+        allowPrivilegeEscalation: false
+      volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+        - name: execd
+          mountPath: /execd
+    - name: sidecar
+      image: {{ .Values.images.sidecar }}
+      imagePullPolicy: {{ .Values.images.pullPolicy }}
+      env:
+        - name: EXECD_SOCKET
+          value: {{ $socket | quote }}
+        - name: TEMPORAL_ADDRESS
+          value: {{ .Values.temporal.address | quote }}
+        - name: TEMPORAL_NAMESPACE
+          value: {{ .Values.temporal.namespace | quote }}
+        - name: TEMPORAL_TASK_QUEUE
+          value: {{ .Values.taskQueue | quote }}
+      securityContext:
+        runAsUser: {{ .Values.uids.sidecar }}
+      # /ready answers once the sidecar reaches Temporal, so Ready means polling.
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: 8080
+        periodSeconds: 2
+      volumeMounts:
+        - name: execd
+          mountPath: /execd

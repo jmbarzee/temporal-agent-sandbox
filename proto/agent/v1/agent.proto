@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package agent.v1;
+
+import "google/protobuf/empty.proto";
+import "sandbox/v1/sandbox.proto";
+import "temporal/v1/temporal.proto";
+
+option go_package = "github.com/jmbarzee/temporal-agent-sandbox/gen/agent/v1;agentv1";
+
+// Agents hosts the Agent workflow: one unbroken LLM context working one
+// Task inside one Sandbox. Lease handling is the workflow's; the LLM never
+// sees it.
+service Agents {
+  option (temporal.v1.service) = {task_queue: "agent"};
+
+  rpc Agent(AgentInput) returns (AgentOutput) {
+    option (temporal.v1.workflow) = {
+      name: "agent.v1.Agent"
+      signal: {ref: "SandboxAssign"}
+      signal: {ref: "SandboxLeaseGrant"}
+      signal: {ref: "SandboxLeaseDeny"}
+    };
+  }
+
+  // SandboxAssign is the SandboxOrchestrator's answer to Request: the sandbox to lease.
+  rpc SandboxAssign(SandboxAssignInput) returns (google.protobuf.Empty) {
+    option (temporal.v1.signal) = {};
+  }
+
+  // SandboxLeaseGrant grants a lease request.
+  rpc SandboxLeaseGrant(SandboxLeaseGrantInput) returns (google.protobuf.Empty) {
+    option (temporal.v1.signal) = {};
+  }
+
+  // SandboxLeaseDeny refuses a lease request. The Agent fails.
+  rpc SandboxLeaseDeny(SandboxLeaseDenyInput) returns (google.protobuf.Empty) {
+    option (temporal.v1.signal) = {};
+  }
+
+  rpc CallModel(CallModelInput) returns (CallModelOutput) {
+    option (temporal.v1.activity) = {
+      name: "agent.v1.CallModel"
+      start_to_close_timeout: {seconds: 600}
+      retry_policy: {max_attempts: 3}
+    };
+  }
+}
+
+message AgentInput {
+  Instructions instructions = 1;
+  Task task = 2;
+  Tools tools = 3;
+  // resume is set only by continue_as_new.
+  Resume resume = 4;
+}
+
+message AgentOutput {
+  Context context = 1;
+}
+
+message Instructions {
+  string text = 1;
+}
+
+message Task {
+  string scope = 1;
+  sandbox.v1.Assets relevant_assets = 2;
+  string finish_conditions = 3;
+}
+
+message Tools {
+  repeated Tool tools = 1;
+}
+
+message Tool {
+  string name = 1;
+  string description = 2;
+  // input_schema is JSON Schema for the tool's arguments.
+  string input_schema = 3;
+}
+
+message Resume {
+  sandbox.v1.Lease lease = 1;
+  Context context = 2;
+}
+
+// Context is the agent's whole conversation so far.
+message Context {
+  repeated Message messages = 1;
+}
+
+message Message {
+  // role is "system", "user", "assistant", or "tool".
+  string role = 1;
+  string content = 2;
+  repeated sandbox.v1.ToolCall tool_calls = 3;
+  repeated sandbox.v1.ToolOutput tool_outputs = 4;
+}
+
+message SandboxAssignInput {
+  string sandbox_id = 1;
+}
+
+message SandboxLeaseGrantInput {
+  sandbox.v1.Lease lease = 1;
+}
+
+message SandboxLeaseDenyInput {
+  string reason = 1;
+}
+
+message CallModelInput {
+  Context context = 1;
+  Tools tools = 2;
+}
+
+message CallModelOutput {
+  Message reply = 1;
+  // done is the model declaring the Task finished.
+  bool done = 2;
+}

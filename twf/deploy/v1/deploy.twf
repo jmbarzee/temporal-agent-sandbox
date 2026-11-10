@@ -1,0 +1,43 @@
+package deploy
+
+import "github.com/jmbarzee/temporal-agent-sandbox/twf/agent/v1"
+import "github.com/jmbarzee/temporal-agent-sandbox/twf/sandbox/v1"
+import "github.com/metacensus/library-temporal-kube/twf/helm/v1"
+import "github.com/metacensus/library-temporal-kube/twf/kube/v1"
+
+# Agents never share a worker with sandbox orchestration. Their only
+# interface to sandboxes is the sandbox package's signals and queue.
+worker agent:
+	workflow agent.Agent
+	activity agent.CallModel
+
+# Sandbox provider. Swap the helm and kube backed implementation for
+# another provider without touching the agent worker. RenderChart is
+# hosted here so the sandbox chart compiles into the same binary.
+worker sandboxes:
+	workflow sandbox.SandboxOrchestrator
+	workflow sandbox.Sandbox
+	activity helm.RenderChart
+
+# The only worker that holds cluster credentials.
+worker infra:
+	activity kube.Create
+	activity kube.Ready
+	activity kube.Delete
+
+worker sidecar:
+	activity sandbox.RunTool
+
+namespace agentsandbox:
+	worker agent
+		options:
+			task_queue: "agent"
+	worker sandboxes
+		options:
+			task_queue: "sandboxes"
+	worker infra
+		options:
+			task_queue: "infra"
+	worker sidecar
+		options:
+			task_queue: "sandbox-{sandboxId}"

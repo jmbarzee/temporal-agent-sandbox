@@ -1,0 +1,5 @@
+apiVersion: v2
+name: sandbox
+description: One sandbox pod. Untrusted work in the sandbox container, a Temporal sidecar beside it.
+type: application
+version: 0.1.0

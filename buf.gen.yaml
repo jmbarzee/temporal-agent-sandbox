@@ -1,0 +1,19 @@
+version: v2
+managed:
+  enabled: true
+plugins:
+  # Standard Go protobuf types with struct tags patched in.
+  - local: protoc-gen-go-patch
+    out: gen
+    opt:
+      - paths=source_relative
+      - plugin=go
+  # Temporal workflow, signal, query and activity stubs.
+  - local: protoc-gen-go_temporal
+    out: gen
+    opt:
+      - enable-patch-support=true
+      - paths=source_relative
+    strategy: all
+inputs:
+  - directory: proto

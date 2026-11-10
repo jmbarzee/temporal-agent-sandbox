@@ -1,0 +1,22 @@
+# Mocks for the generated activity interfaces; workflow tests mock these and
+# nothing else. Regenerate with `make mocks`.
+with-expecter: true
+mockname: "Mock{{.InterfaceName}}"
+outpkg: "{{.PackageName}}"
+filename: "{{.InterfaceName | snakecase}}.go"
+dir: "mocks/{{.InterfaceDirRelative}}"
+resolve-type-alias: false
+disable-version-string: true
+issue-845-fix: true
+
+packages:
+  github.com/jmbarzee/temporal-agent-sandbox/gen/agent/v1:
+    config:
+      dir: "mocks/agent/v1"
+    interfaces:
+      AgentsActivities:
+  github.com/jmbarzee/temporal-agent-sandbox/gen/sandbox/v1:
+    config:
+      dir: "mocks/sandbox/v1"
+    interfaces:
+      SandboxesActivities:
