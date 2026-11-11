@@ -7,8 +7,10 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
+	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/temporal"
 	"google.golang.org/protobuf/types/known/durationpb"
 
@@ -25,6 +27,8 @@ const (
 
 type Activities struct {
 	socket string
+	// done keeps each finished call's output by callKey, for the pod's life.
+	done sync.Map
 }
 
 // NewActivities reaches execd at EXECD_SOCKET.
@@ -48,6 +52,13 @@ func (a *Activities) RunTool(ctx context.Context, req *pb.RunToolInput) (*pb.Run
 		return nil, temporal.NewNonRetryableApplicationError("sh needs a command", "BadToolInput", err)
 	}
 
+	// A retry of a call that finished, but whose output never reached
+	// Temporal, gets that output instead of running the command again.
+	key := callKey(activity.GetInfo(ctx))
+	if out, ok := a.done.Load(key); ok {
+		return out.(*pb.RunToolOutput), nil
+	}
+
 	deadline, _ := ctx.Deadline()
 	res, err := execd.Call(ctx, a.socket, &execdv1.Command{
 		Command: args.Command,
@@ -56,13 +67,21 @@ func (a *Activities) RunTool(ctx context.Context, req *pb.RunToolInput) (*pb.Run
 	if err != nil {
 		return nil, err
 	}
-	out := strings.ToValidUTF8(string(res.GetOutput()), "\uFFFD")
+	text := strings.ToValidUTF8(string(res.GetOutput()), "\uFFFD")
 	if res.GetTruncated() {
-		out += "\n[truncated]"
+		text += "\n[truncated]"
 	}
-	return &pb.RunToolOutput{Output: &pb.ToolOutput{
+	out := &pb.RunToolOutput{Output: &pb.ToolOutput{
 		ToolCallId: call.GetId(),
-		Output:     out,
+		Output:     text,
 		ExitCode:   res.GetExitCode(),
-	}}, nil
+	}}
+	a.done.Store(key, out)
+	return out, nil
+}
+
+// callKey is the same for every attempt of one call, and differs between
+// calls and between runs of a workflow.
+func callKey(info activity.Info) string {
+	return info.WorkflowExecution.ID + "/" + info.WorkflowExecution.RunID + "/" + info.ActivityID
 }

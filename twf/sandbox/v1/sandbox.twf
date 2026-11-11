@@ -82,6 +82,7 @@ workflow Sandbox(sandboxId: SandboxId, assets: Assets):
 	activity kube.Delete(ids)
 	close complete
 
-# Runs on the pod's sidecar worker.
+# Runs on the pod's sidecar worker, which keeps each finished call's output,
+# keyed by workflow run and activity, so a retry of it runs nothing.
 activity RunTool(call: ToolCall) -> (ToolOutput):
 	return exec(call)

@@ -742,7 +742,7 @@ const file_sandbox_v1_sandbox_proto_rawDesc = "" +
 	"\fLeaseRelease\x12\x1d.sandbox.v1.LeaseReleaseInput\x1a\x16.google.protobuf.Empty\"\x04\xa2\xc4\x03\x00\x12D\n" +
 	"\bGetLease\x12\x16.google.protobuf.Empty\x1a\x1a.sandbox.v1.GetLeaseOutput\"\x04\x9a\xc4\x03\x00\x12n\n" +
 	"\aRunTool\x12\x18.sandbox.v1.RunToolInput\x1a\x19.sandbox.v1.RunToolOutput\".\x92\xc4\x03*\n" +
-	"\asandbox\x1a\x02\b<\"\x03\b\x88\x0e2\x02 \x01:\x12sandbox.v1.RunTool\x1a\x0f\x8a\xc4\x03\v\n" +
+	"\asandbox\x1a\x02\b<\"\x03\b\x88\x0e2\x02 \x03:\x12sandbox.v1.RunTool\x1a\x0f\x8a\xc4\x03\v\n" +
 	"\tsandboxesB\xac\x01\n" +
 	"\x0ecom.sandbox.v1B\fSandboxProtoP\x01ZCgithub.com/jmbarzee/temporal-agent-sandbox/gen/sandbox/v1;sandboxv1\xa2\x02\x03SXX\xaa\x02\n" +
 	"Sandbox.V1\xca\x02\n" +

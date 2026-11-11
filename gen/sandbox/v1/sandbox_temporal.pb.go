@@ -1524,7 +1524,8 @@ func RequestExternalAsync(ctx workflow.Context, workflowID string, runID string,
 type SandboxesActivities interface {
 	// RunTool runs on the pod's sidecar worker, which hands the command to the
 	// sandbox container. Callers route each call to the sandbox's own queue,
-	// "sandbox-{sandboxId}".
+	// "sandbox-{sandboxId}". The sidecar keeps each finished call's output, so
+	// a retry of a call that finished runs nothing.
 	RunTool(ctx context.Context, req *RunToolInput) (*RunToolOutput, error)
 }
 
@@ -1565,14 +1566,16 @@ func (f *RunToolFuture) Select(sel workflow.Selector, fn func(*RunToolFuture)) w
 
 // RunTool runs on the pod's sidecar worker, which hands the command to the
 // sandbox container. Callers route each call to the sandbox's own queue,
-// "sandbox-{sandboxId}".
+// "sandbox-{sandboxId}". The sidecar keeps each finished call's output, so
+// a retry of a call that finished runs nothing.
 func RunTool(ctx workflow.Context, req *RunToolInput, options ...*RunToolActivityOptions) (*RunToolOutput, error) {
 	return RunToolAsync(ctx, req, options...).Get(ctx)
 }
 
 // RunTool runs on the pod's sidecar worker, which hands the command to the
 // sandbox container. Callers route each call to the sandbox's own queue,
-// "sandbox-{sandboxId}".
+// "sandbox-{sandboxId}". The sidecar keeps each finished call's output, so
+// a retry of a call that finished runs nothing.
 func RunToolAsync(ctx workflow.Context, req *RunToolInput, options ...*RunToolActivityOptions) *RunToolFuture {
 	var o *RunToolActivityOptions
 	if len(options) > 0 && options[0] != nil {
@@ -1596,14 +1599,16 @@ func RunToolAsync(ctx workflow.Context, req *RunToolInput, options ...*RunToolAc
 
 // RunTool runs on the pod's sidecar worker, which hands the command to the
 // sandbox container. Callers route each call to the sandbox's own queue,
-// "sandbox-{sandboxId}".
+// "sandbox-{sandboxId}". The sidecar keeps each finished call's output, so
+// a retry of a call that finished runs nothing.
 func RunToolLocal(ctx workflow.Context, req *RunToolInput, options ...*RunToolLocalActivityOptions) (*RunToolOutput, error) {
 	return RunToolLocalAsync(ctx, req, options...).Get(ctx)
 }
 
 // RunTool runs on the pod's sidecar worker, which hands the command to the
 // sandbox container. Callers route each call to the sandbox's own queue,
-// "sandbox-{sandboxId}".
+// "sandbox-{sandboxId}". The sidecar keeps each finished call's output, so
+// a retry of a call that finished runs nothing.
 func RunToolLocalAsync(ctx workflow.Context, req *RunToolInput, options ...*RunToolLocalActivityOptions) *RunToolFuture {
 	var o *RunToolLocalActivityOptions
 	if len(options) > 0 && options[0] != nil {
@@ -1657,7 +1662,7 @@ func (o *RunToolActivityOptions) Build(ctx workflow.Context) (workflow.Context, 
 	if v := o.retryPolicy; v != nil {
 		opts.RetryPolicy = v
 	} else if opts.RetryPolicy == nil {
-		opts.RetryPolicy = &temporal.RetryPolicy{MaximumAttempts: int32(1)}
+		opts.RetryPolicy = &temporal.RetryPolicy{MaximumAttempts: int32(3)}
 	}
 	if v := o.scheduleToCloseTimeout; v != nil {
 		opts.ScheduleToCloseTimeout = *v
@@ -1758,7 +1763,7 @@ func (o *RunToolLocalActivityOptions) Build(ctx workflow.Context) (workflow.Cont
 	if v := o.retryPolicy; v != nil {
 		opts.RetryPolicy = v
 	} else if opts.RetryPolicy == nil {
-		opts.RetryPolicy = &temporal.RetryPolicy{MaximumAttempts: int32(1)}
+		opts.RetryPolicy = &temporal.RetryPolicy{MaximumAttempts: int32(3)}
 	}
 	if v := o.scheduleToCloseTimeout; v != nil {
 		opts.ScheduleToCloseTimeout = *v

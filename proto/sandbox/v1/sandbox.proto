@@ -60,14 +60,15 @@ service Sandboxes {
 
   // RunTool runs on the pod's sidecar worker, which hands the command to the
   // sandbox container. Callers route each call to the sandbox's own queue,
-  // "sandbox-{sandboxId}".
+  // "sandbox-{sandboxId}". The sidecar keeps each finished call's output, so
+  // a retry of a call that finished runs nothing.
   rpc RunTool(RunToolInput) returns (RunToolOutput) {
     option (temporal.v1.activity) = {
       name: "sandbox.v1.RunTool"
       task_queue: "sandbox"
       schedule_to_start_timeout: {seconds: 60}
       start_to_close_timeout: {seconds: 1800}
-      retry_policy: {max_attempts: 1}
+      retry_policy: {max_attempts: 3}
     };
   }
 }

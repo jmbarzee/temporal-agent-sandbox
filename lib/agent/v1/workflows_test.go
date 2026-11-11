@@ -28,7 +28,7 @@ var errModel = temporal.NewNonRetryableApplicationError("model unavailable", "Mo
 
 var errSandboxGone = &temporal.UnknownExternalWorkflowExecutionError{}
 
-// errToolLost is retryable, so only RunTool's retry policy keeps it to one call.
+// errToolLost is retryable, so RunTool's retry policy bounds its calls.
 var errToolLost = errors.New("execd closed without a reply")
 
 func validInput() *pb.AgentInput {
@@ -196,10 +196,10 @@ func TestAgentWorkflow_Execute(t *testing.T) {
 			wantErr:  true,
 		},
 		{
-			name:          "error - a failed tool call is not retried",
+			name:          "error - a tool call that keeps failing stops at its third attempt",
 			replies:       []*pb.CallModelOutput{reply("", false, &sandboxv1.ToolCall{Id: "c1", Name: "sh", Input: "ls"})},
 			toolErr:       errToolLost,
-			wantToolCalls: 1,
+			wantToolCalls: 3,
 			wantErr:       true,
 		},
 	}

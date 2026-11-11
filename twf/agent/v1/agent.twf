@@ -67,14 +67,14 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 		# Tool calls run one at a time.
 		for (call in reply.toolCalls):
 			# schedule_to_start: no poller means the sandbox is lost.
-			# A retry could run a command twice.
+			# A retry of a call that finished gets its kept output.
 			activity sandbox.RunTool(call) -> output
 				options:
 					task_queue: "sandbox-{lease.sandboxId}"
 					schedule_to_start_timeout: 1m
 					start_to_close_timeout: 30m
 					retry_policy:
-						maximum_attempts: 1
+						maximum_attempts: 3
 			context = context + output
 
 		turns = turns + 1
