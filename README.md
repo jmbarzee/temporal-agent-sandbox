@@ -1,8 +1,8 @@
-# temporal-agent-sandbox
+# Durable agents, disposable sandboxes
 
-An LLM agent run as a durable [Temporal](https://temporal.io) workflow, its tool calls executed in a disposable Kubernetes pod.
+An LLM agent run as a durable [Temporal](https://temporal.io) workflow, its tool calls executed in a disposable Kubernetes pod. Designed in [TWF](https://www.npmjs.com/package/@temporal-architect/twf) with [Temporal Architect](https://github.com/jmbarzee/temporal-architect): the `.twf` files in `twf/` are the source of truth.
 
-![Architecture: a workflow starter and three Temporal workers around one Temporal server; the sandboxes worker alone reaches the Kubernetes API, which creates a pod per sandbox](docs/architecture.svg)
+![Architecture: a workflow starter and three Temporal workers around one Temporal server, each polling its own task queue; the sandboxes worker alone reaches the Kubernetes API, which creates a pod per sandbox](docs/architecture.svg)
 
 ![One run: the agent gets a sandbox from the distributor, then leases it from the sandbox instance for each turn; the sandbox deletes its pod once unleased past its grace](docs/workflows.svg)
 
@@ -13,7 +13,7 @@ An LLM agent run as a durable [Temporal](https://temporal.io) workflow, its tool
 - **Access is leased.** Tools run only under a lease, and an unleased sandbox deletes its pod after a grace period, so a crashed agent leaks nothing.
 - **A task queue is the only path to a pod.** Agents never address the cluster or the pod.
 - **A command runs at most once.** `RunTool` never retries.
-- **The design leads the code.** `twf/` declares every workflow, activity, worker, and queue in [TWF](https://www.npmjs.com/package/@temporal-architect/twf).
+- **The design leads the code.** A change starts in `twf/`.
 
 ## Layout
 
