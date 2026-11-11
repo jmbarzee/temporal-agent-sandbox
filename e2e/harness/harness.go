@@ -27,7 +27,6 @@ import (
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers"
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/agent"
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/config"
-	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/infra"
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/sandboxes"
 )
 
@@ -115,7 +114,7 @@ func runTests(m *testing.M) (code int, err error) {
 			return 1, err
 		}
 	}
-	for queue, worker := range map[string]fx.Option{"agent": agent.Module, "sandboxes": sandboxes.Module, "infra": infra.Module} {
+	for queue, worker := range map[string]fx.Option{"agent": agent.Module, "sandboxes": sandboxes.Module} {
 		app := fx.New(workers.Module, worker, fx.NopLogger, fx.Replace(&config.Config{
 			TemporalAddress: address, TemporalNamespace: namespace, TaskQueue: queue, HealthAddress: "127.0.0.1:0",
 		}))

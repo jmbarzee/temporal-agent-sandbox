@@ -7,7 +7,6 @@ import (
 
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers"
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/agent"
-	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/infra"
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/sandboxes"
 	"github.com/jmbarzee/temporal-agent-sandbox/lib/workers/sidecar"
 )
@@ -20,7 +19,6 @@ func TestModule(t *testing.T) {
 		worker fx.Option
 	}{
 		{name: "success - the agent worker's graph resolves", worker: agent.Module},
-		{name: "success - the infra worker's graph resolves", worker: infra.Module},
 		{name: "success - the sandboxes worker's graph resolves", worker: sandboxes.Module},
 		{name: "success - the sidecar worker's graph resolves", worker: sidecar.Module},
 	}

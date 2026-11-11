@@ -27,7 +27,6 @@ const (
 	// requestsPerRun bounds the orchestrator's history before continue_as_new.
 	requestsPerRun = 1000
 	chartName      = "sandbox"
-	infraQueue     = "infra"
 	podTimeout     = 5 * time.Minute
 )
 
@@ -139,7 +138,7 @@ func (s *sandbox) Execute(ctx workflow.Context) error {
 	// grace period. The pod's termination grace period covers the sidecar.
 	// Started first so denying queued requests cannot delay it.
 	deleted := kubev1.DeleteAsync(ctx, &kubev1.DeleteInput{Resources: resources},
-		kubev1.NewDeleteActivityOptions().WithTaskQueue(infraQueue))
+		kubev1.NewDeleteActivityOptions())
 	s.denyQueued(ctx, reason)
 	_, deleteErr := deleted.Get(ctx)
 	s.denyQueued(ctx, reason)
@@ -167,14 +166,14 @@ func (s *sandbox) createPod(ctx workflow.Context) ([]*kubev1.ResourceIdentifier,
 		return nil, err
 	}
 	created, err := kubev1.Create(ctx, &kubev1.CreateInput{Resources: rendered.GetResources()},
-		kubev1.NewCreateActivityOptions().WithTaskQueue(infraQueue).WithScheduleToCloseTimeout(podTimeout))
+		kubev1.NewCreateActivityOptions().WithScheduleToCloseTimeout(podTimeout))
 	if err != nil {
 		// Create can fail after reaching the cluster.
 		return []*kubev1.ResourceIdentifier{podIdentifier(id, s.pods.Namespace)}, err
 	}
 	// Ready fails until every resource is current; the retry policy is the wait.
 	_, err = kubev1.Ready(ctx, &kubev1.ReadyInput{Resources: created.GetResources()},
-		kubev1.NewReadyActivityOptions().WithTaskQueue(infraQueue).
+		kubev1.NewReadyActivityOptions().
 			WithScheduleToCloseTimeout(podTimeout).
 			WithRetryPolicy(&temporal.RetryPolicy{InitialInterval: 2 * time.Second, MaximumInterval: 10 * time.Second}))
 	return created.GetResources(), err

@@ -47,12 +47,10 @@ workflow Sandbox(sandboxId: SandboxId, assets: Assets):
 	activity helm.RenderChart("sandbox", "sandbox-{sandboxId}", pods.namespace, Values{sandboxId, assets, pods}) -> resources
 	activity kube.Create(resources) -> ids
 		options:
-			task_queue: "infra"
 			schedule_to_close_timeout: 5m
 	# Ready fails until every resource is current; the retry policy is the wait.
 	activity kube.Ready(ids)
 		options:
-			task_queue: "infra"
 			schedule_to_close_timeout: 5m
 			retry_policy:
 				initial_interval: 2s
@@ -82,8 +80,6 @@ workflow Sandbox(sandboxId: SandboxId, assets: Assets):
 	# Nothing is in flight by now: any lease has been expired for the whole grace period.
 	# The pod's termination grace period covers the sidecar's own shutdown.
 	activity kube.Delete(ids)
-		options:
-			task_queue: "infra"
 	close complete
 
 # Runs on the pod's sidecar worker.

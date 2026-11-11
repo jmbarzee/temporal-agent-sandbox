@@ -11,16 +11,14 @@ worker agent:
 	workflow agent.Agent
 	activity agent.CallModel
 
-# Sandbox provider. Swap the helm and kube backed implementation for
-# another provider without touching the agent worker. RenderChart is
-# hosted here so the sandbox chart compiles into the same binary.
+# Sandbox provider, and the only worker that holds cluster credentials.
+# Swap the helm and kube backed implementation for another provider
+# without touching the agent worker. RenderChart is hosted here so the
+# sandbox chart compiles into the same binary.
 worker sandboxes:
 	workflow sandbox.SandboxOrchestrator
 	workflow sandbox.Sandbox
 	activity helm.RenderChart
-
-# The only worker that holds cluster credentials.
-worker infra:
 	activity kube.Create
 	activity kube.Ready
 	activity kube.Delete
@@ -35,9 +33,6 @@ namespace agentsandbox:
 	worker sandboxes
 		options:
 			task_queue: "sandboxes"
-	worker infra
-		options:
-			task_queue: "infra"
 	worker sidecar
 		options:
 			task_queue: "sandbox-{sandboxId}"

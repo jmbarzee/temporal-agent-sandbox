@@ -11,7 +11,7 @@ TOOL_PATH := PATH="$(CURDIR)/.bin:$$PATH"
 
 GOLANGCI_LINT_VERSION := v2.14.0
 TWF_VERSION := 0.16.0
-WORKERS := agent sandboxes infra sidecar
+WORKERS := agent sandboxes sidecar
 
 help:
 	@awk -F' — ' '/^## /{ sub(/^## /, ""); printf "  make %-22s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
