@@ -41,14 +41,17 @@
 <text x="964.0" y="565" fill="#94A3B8" font-size="12" text-anchor="middle" dy="0.35em">execd on a socket</text>
 <path d="M156.0 120 V178" fill="none" stroke="#9D8AD0" stroke-width="1.25" stroke-dasharray="5 4" marker-end="url(#h9D8AD0)"/>
 <path d="M456 208.0 H290" fill="none" stroke="#6B7688" stroke-width="1.25" marker-end="url(#h6B7688)"/>
-<rect x="341.5" y="199.0" width="45" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="364.0" y="208.0" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">agent</text>
+<rect x="325.0" y="192.0" width="78" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="364.0" y="201.0" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="364.0" y="215.0" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">agent</text>
 <path d="M456 324.0 H290" fill="none" stroke="#6B7688" stroke-width="1.25" marker-end="url(#h6B7688)"/>
-<rect x="328.5" y="315.0" width="71" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="364.0" y="324.0" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandboxes</text>
+<rect x="325.0" y="308.0" width="78" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="364.0" y="317.0" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="364.0" y="331.0" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandboxes</text>
 <path d="M832 440.0 H290" fill="none" stroke="#6B7688" stroke-width="1.25" marker-end="url(#h6B7688)"/>
-<rect x="318.5" y="431.0" width="91" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="364.0" y="440.0" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandbox-{id}</text>
+<rect x="318.5" y="424.0" width="91" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="364.0" y="433.0" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="364.0" y="447.0" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandbox-{id}</text>
 <path d="M720 208.0 H830" fill="none" stroke="#4A7BA7" stroke-width="1.25" marker-end="url(#h4A7BA7)"/>
 <path d="M720 324.0 H830" fill="none" stroke="#4A7BA7" stroke-width="1.25" marker-end="url(#h4A7BA7)"/>
 <path d="M964.0 352 V374" fill="none" stroke="#6B7688" stroke-width="1.25" marker-end="url(#h6B7688)"/>
@@ -59,11 +62,8 @@
 <text x="203.0" y="659" fill="#94A3B8" font-size="11" dy="0.35em">service or API</text>
 <rect x="323.4" y="652" width="26" height="14" rx="7" fill="none" stroke="#4A5568" stroke-dasharray="3 2"/>
 <text x="357.4" y="659" fill="#94A3B8" font-size="11" dy="0.35em">workflow starter</text>
-<rect x="491.0" y="650" width="45" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="513.5" y="659" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">queue</text>
-<text x="544.0" y="659" fill="#94A3B8" font-size="11" dy="0.35em">task queue</text>
-<path d="M638.0 659 H668.0" fill="none" stroke="#4A7BA7" stroke-width="1.25" marker-end="url(#h4A7BA7)"/>
-<text x="678.0" y="659" fill="#94A3B8" font-size="11" dy="0.35em">activity call</text>
-<path d="M791.8 659 H821.8" fill="none" stroke="#9D8AD0" stroke-width="1.25" stroke-dasharray="5 4" marker-end="url(#h9D8AD0)"/>
-<text x="831.8" y="659" fill="#94A3B8" font-size="11" dy="0.35em">workflow start</text>
+<path d="M491.0 659 H521.0" fill="none" stroke="#4A7BA7" stroke-width="1.25" marker-end="url(#h4A7BA7)"/>
+<text x="531.0" y="659" fill="#94A3B8" font-size="11" dy="0.35em">activity call</text>
+<path d="M644.8 659 H674.8" fill="none" stroke="#9D8AD0" stroke-width="1.25" stroke-dasharray="5 4" marker-end="url(#h9D8AD0)"/>
+<text x="684.8" y="659" fill="#94A3B8" font-size="11" dy="0.35em">workflow start</text>
 </svg>

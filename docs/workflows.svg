@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1152" height="986" viewBox="0 0 1152 986" role="img" font-family="&#x27;SF Mono&#x27;, Menlo, Consolas, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" width="1152" height="1000" viewBox="0 0 1152 1000" role="img" font-family="&#x27;SF Mono&#x27;, Menlo, Consolas, monospace">
 <title>One run through the agent, sandbox distributor and sandbox instance workflows</title>
 <desc>Three workflows side by side, time running down, each tagged with the task queue its worker polls, with numbered arrows for each signal and the child start passing between them. The agent leases the sandbox for each turn, the second started by a theoretical UserPrompt signal; RunTool runs on the sandbox instance&#x27;s own task queue, outside every workflow, only while the agent holds the lease.</desc>
 <defs>
@@ -7,154 +7,156 @@
 <marker id="h4A7BA7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#4A7BA7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
 <marker id="h6B7688" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6B7688" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
-<rect width="1152" height="986" rx="10" fill="#1e1f22"/>
+<rect width="1152" height="1000" rx="10" fill="#1e1f22"/>
 <text x="24" y="32" fill="#E2E8F0" font-size="15" font-weight="600" font-family="-apple-system, &#x27;Segoe UI&#x27;, Helvetica, Arial, sans-serif" dy="0.35em">One run</text>
 <text x="312.0" y="68" fill="#94A3B8" font-size="11" letter-spacing="1.5" text-anchor="middle" font-family="-apple-system, &#x27;Segoe UI&#x27;, Helvetica, Arial, sans-serif" dy="0.35em">AGENT</text>
-<rect x="289.5" y="83" width="45" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="312.0" y="92" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">agent</text>
+<rect x="273.0" y="84.0" width="78" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="312.0" y="93" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="312.0" y="107" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">agent</text>
 <text x="648.0" y="68" fill="#94A3B8" font-size="11" letter-spacing="1.5" text-anchor="middle" font-family="-apple-system, &#x27;Segoe UI&#x27;, Helvetica, Arial, sans-serif" dy="0.35em">SANDBOX DISTRIBUTOR</text>
-<rect x="612.5" y="83" width="71" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="648.0" y="92" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandboxes</text>
+<rect x="609.0" y="84.0" width="78" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="648.0" y="93" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="648.0" y="107" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandboxes</text>
 <text x="984.0" y="68" fill="#94A3B8" font-size="11" letter-spacing="1.5" text-anchor="middle" font-family="-apple-system, &#x27;Segoe UI&#x27;, Helvetica, Arial, sans-serif" dy="0.35em">SANDBOX INSTANCE</text>
-<rect x="948.5" y="83" width="71" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="984.0" y="92" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandboxes</text>
-<rect x="168" y="119.0" width="288" height="722.0" rx="8" fill="#23232a" stroke="#6B5B95" stroke-width="1.25"/>
-<path d="M176 119.0 H448 a8 8 0 0 1 8 8 V153.0 H168 V127.0 a8 8 0 0 1 8 -8 Z" fill="#353144"/>
-<path d="M168 153.0 H456" stroke="#6B5B95"/>
-<text x="312.0" y="136" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">workflow</tspan> Agent</text>
-<path d="M312.0 153.0 V816" stroke="#4A5568" stroke-dasharray="3 4"/>
-<rect x="504" y="119.0" width="288" height="178.0" rx="8" fill="#23232a" stroke="#6B5B95" stroke-width="1.25"/>
-<path d="M512 119.0 H784 a8 8 0 0 1 8 8 V153.0 H504 V127.0 a8 8 0 0 1 8 -8 Z" fill="#353144"/>
-<path d="M504 153.0 H792" stroke="#6B5B95"/>
-<text x="648.0" y="136" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">workflow</tspan> SandboxOrchestrator</text>
-<path d="M648.0 153.0 V272" stroke="#4A5568" stroke-dasharray="3 4"/>
-<rect x="840" y="187.0" width="288" height="722.0" rx="8" fill="#23232a" stroke="#6B5B95" stroke-width="1.25"/>
-<path d="M848 187.0 H1120 a8 8 0 0 1 8 8 V221.0 H840 V195.0 a8 8 0 0 1 8 -8 Z" fill="#353144"/>
-<path d="M840 221.0 H1128" stroke="#6B5B95"/>
-<text x="984.0" y="204" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">workflow</tspan> Sandbox</text>
-<path d="M984.0 221.0 V884" stroke="#4A5568" stroke-dasharray="3 4"/>
-<rect x="460" y="361.0" width="4" height="162" rx="2" fill="#6FBF9A"/>
-<rect x="460" y="633.0" width="4" height="162" rx="2" fill="#6FBF9A"/>
-<rect x="180" y="157.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="312.0" y="170" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> SandboxOrchestrator.Request</text>
-<rect x="180" y="225.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="312.0" y="238" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> SandboxAssign</text>
-<rect x="180" y="327.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="312.0" y="340" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRequest</text>
-<rect x="180" y="361.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="312.0" y="374" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> SandboxLeaseGrant</text>
-<rect x="180" y="395.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="312.0" y="408" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
-<rect x="132" y="429.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="264.0" y="442" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> RunTool</text>
-<rect x="180" y="463.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="312.0" y="476" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
-<rect x="33" y="433" width="91" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="78.5" y="442" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandbox-{id}</text>
-<rect x="180" y="497.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="312.0" y="510" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRelease</text>
-<rect x="180" y="565.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="312.0" y="578" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> UserPrompt</text>
-<text x="124" y="571.0" fill="#6B7688" font-size="11" text-anchor="end" dy="0.35em">user</text>
-<text x="124" y="585.0" fill="#6B7688" font-size="11" text-anchor="end" dy="0.35em">(theoretical)</text>
-<rect x="180" y="599.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="312.0" y="612" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRequest</text>
-<rect x="180" y="633.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="312.0" y="646" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> SandboxLeaseGrant</text>
-<rect x="180" y="667.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="312.0" y="680" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
-<rect x="132" y="701.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="264.0" y="714" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> RunTool</text>
-<rect x="180" y="735.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="312.0" y="748" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
-<rect x="33" y="705" width="91" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="78.5" y="714" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandbox-{id}</text>
-<rect x="180" y="769.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="312.0" y="782" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRelease</text>
-<rect x="180" y="803.0" width="264" height="26" rx="6" fill="#272a30" stroke="#4A5568"/>
-<text x="312.0" y="816" fill="#CBD5E1" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">close</tspan> complete</text>
-<rect x="516" y="157.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="648.0" y="170" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">on signal</tspan> Request</text>
-<rect x="516" y="191.0" width="264" height="26" rx="6" fill="#353144" stroke="#6B5B95"/>
-<text x="648.0" y="204" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">detach workflow</tspan> Sandbox</text>
-<rect x="516" y="225.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="648.0" y="238" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Agent.SandboxAssign</text>
-<rect x="564.0" y="262" width="168" height="20" fill="#23232a"/>
-<text x="648.0" y="272" fill="#6B7688" font-size="12" text-anchor="middle" dy="0.35em">↺ await next Request</text>
-<rect x="852" y="225.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="984.0" y="238" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> helm.RenderChart</text>
-<rect x="852" y="259.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="984.0" y="272" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> kube.Create</text>
-<rect x="852" y="293.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="984.0" y="306" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> kube.Ready</text>
-<rect x="852" y="327.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="984.0" y="340" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> LeaseRequest</text>
-<rect x="852" y="361.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="984.0" y="374" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> SandboxLeaseGrant</text>
-<rect x="852" y="497.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="984.0" y="510" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> LeaseRelease</text>
-<rect x="852" y="531.0" width="264" height="26" rx="6" fill="#373224" stroke="#B8962E"/>
-<text x="984.0" y="544" fill="#F0D58C" font-size="12" text-anchor="middle" dy="0.35em">timer(grace)</text>
-<rect x="852" y="599.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="984.0" y="612" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">on signal</tspan> LeaseRequest</text>
-<rect x="852" y="633.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="984.0" y="646" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> SandboxLeaseGrant</text>
-<rect x="852" y="769.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
-<text x="984.0" y="782" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> LeaseRelease</text>
-<rect x="852" y="803.0" width="264" height="26" rx="6" fill="#373224" stroke="#B8962E"/>
-<text x="984.0" y="816" fill="#F0D58C" font-size="12" text-anchor="middle" dy="0.35em">timer(grace)</text>
-<rect x="852" y="837.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
-<text x="984.0" y="850" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> kube.Delete</text>
-<rect x="852" y="871.0" width="264" height="26" rx="6" fill="#272a30" stroke="#4A5568"/>
-<text x="984.0" y="884" fill="#CBD5E1" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">close</tspan> complete</text>
-<path d="M444 170 H514" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="480.0" cy="170" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="480.0" y="170" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">1</text>
-<path d="M780 204 H838" fill="none" stroke="#9D8AD0" stroke-width="1.25" stroke-dasharray="5 4" marker-end="url(#h9D8AD0)"/>
-<circle cx="816.0" cy="204" r="9" fill="#1e1f22" stroke="#9D8AD0"/>
-<text x="816.0" y="204" fill="#9D8AD0" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">2</text>
-<path d="M516 238 H446" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="480.0" cy="238" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="480.0" y="238" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">3</text>
-<path d="M444 340 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="480.0" cy="340" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="480.0" y="340" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">4</text>
-<path d="M852 374 H446" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="816.0" cy="374" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="816.0" y="374" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">5</text>
-<path d="M444 510 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="480.0" cy="510" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="480.0" y="510" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">6</text>
-<path d="M132 578 H178" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="156.0" cy="578" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="156.0" y="578" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">7</text>
-<path d="M444 612 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="480.0" cy="612" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="480.0" y="612" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">8</text>
-<path d="M852 646 H446" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="816.0" cy="646" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="816.0" y="646" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">9</text>
-<path d="M444 782 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
-<circle cx="480.0" cy="782" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="480.0" y="782" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">10</text>
-<rect x="24" y="945" width="18" height="14" rx="3" fill="#353144" stroke="#6B5B95"/>
-<text x="50" y="952" fill="#94A3B8" font-size="11" dy="0.35em">workflow</text>
-<rect x="130.8" y="945" width="18" height="14" rx="3" fill="#3b3033" stroke="#EF9A9A"/>
-<text x="156.8" y="952" fill="#94A3B8" font-size="11" dy="0.35em">send signal</text>
-<rect x="257.4" y="945" width="18" height="14" rx="3" fill="#262427" stroke="#EF9A9A" stroke-dasharray="3 2"/>
-<text x="283.4" y="952" fill="#94A3B8" font-size="11" dy="0.35em">receive signal</text>
-<rect x="403.79999999999995" y="945" width="18" height="14" rx="3" fill="#27313d" stroke="#4A7BA7"/>
-<text x="429.79999999999995" y="952" fill="#94A3B8" font-size="11" dy="0.35em">activity</text>
-<rect x="510.59999999999997" y="945" width="18" height="14" rx="3" fill="#373224" stroke="#B8962E"/>
-<text x="536.5999999999999" y="952" fill="#94A3B8" font-size="11" dy="0.35em">timer</text>
-<rect x="604.5999999999999" y="945" width="4" height="14" rx="2" fill="#6FBF9A"/>
-<text x="623.5999999999999" y="952" fill="#94A3B8" font-size="11" dy="0.35em">lease held</text>
-<rect x="717.5999999999999" y="943" width="45" height="18" rx="4" fill="#1e1f22" stroke="#4A5568"/>
-<text x="740.0999999999999" y="952" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">queue</text>
-<text x="770.5999999999999" y="952" fill="#94A3B8" font-size="11" dy="0.35em">task queue</text>
-<path d="M864.5999999999999 952 H894.5999999999999" fill="none" stroke="#9D8AD0" stroke-width="1.25" stroke-dasharray="5 4" marker-end="url(#h9D8AD0)"/>
-<text x="904.5999999999999" y="952" fill="#94A3B8" font-size="11" dy="0.35em">child start</text>
-<circle cx="1014.1999999999999" cy="952" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
-<text x="1014.1999999999999" y="952" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">1</text>
-<text x="1031.1999999999998" y="952" fill="#94A3B8" font-size="11" dy="0.35em">message order</text>
+<rect x="945.0" y="84.0" width="78" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="984.0" y="93" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="984.0" y="107" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandboxes</text>
+<rect x="168" y="133.0" width="288" height="722.0" rx="8" fill="#23232a" stroke="#6B5B95" stroke-width="1.25"/>
+<path d="M176 133.0 H448 a8 8 0 0 1 8 8 V167.0 H168 V141.0 a8 8 0 0 1 8 -8 Z" fill="#353144"/>
+<path d="M168 167.0 H456" stroke="#6B5B95"/>
+<text x="312.0" y="150" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">workflow</tspan> Agent</text>
+<path d="M312.0 167.0 V830" stroke="#4A5568" stroke-dasharray="3 4"/>
+<rect x="504" y="133.0" width="288" height="178.0" rx="8" fill="#23232a" stroke="#6B5B95" stroke-width="1.25"/>
+<path d="M512 133.0 H784 a8 8 0 0 1 8 8 V167.0 H504 V141.0 a8 8 0 0 1 8 -8 Z" fill="#353144"/>
+<path d="M504 167.0 H792" stroke="#6B5B95"/>
+<text x="648.0" y="150" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">workflow</tspan> SandboxOrchestrator</text>
+<path d="M648.0 167.0 V286" stroke="#4A5568" stroke-dasharray="3 4"/>
+<rect x="840" y="201.0" width="288" height="722.0" rx="8" fill="#23232a" stroke="#6B5B95" stroke-width="1.25"/>
+<path d="M848 201.0 H1120 a8 8 0 0 1 8 8 V235.0 H840 V209.0 a8 8 0 0 1 8 -8 Z" fill="#353144"/>
+<path d="M840 235.0 H1128" stroke="#6B5B95"/>
+<text x="984.0" y="218" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">workflow</tspan> Sandbox</text>
+<path d="M984.0 235.0 V898" stroke="#4A5568" stroke-dasharray="3 4"/>
+<rect x="460" y="375.0" width="4" height="162" rx="2" fill="#6FBF9A"/>
+<rect x="460" y="647.0" width="4" height="162" rx="2" fill="#6FBF9A"/>
+<rect x="180" y="171.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="312.0" y="184" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> SandboxOrchestrator.Request</text>
+<rect x="180" y="239.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="312.0" y="252" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> SandboxAssign</text>
+<rect x="180" y="341.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="312.0" y="354" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRequest</text>
+<rect x="180" y="375.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="312.0" y="388" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> SandboxLeaseGrant</text>
+<rect x="180" y="409.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="312.0" y="422" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
+<rect x="132" y="443.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="264.0" y="456" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> RunTool</text>
+<rect x="180" y="477.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="312.0" y="490" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
+<rect x="33" y="440.0" width="91" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="78.5" y="449" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="78.5" y="463" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandbox-{id}</text>
+<rect x="180" y="511.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="312.0" y="524" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRelease</text>
+<rect x="180" y="579.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="312.0" y="592" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> UserPrompt</text>
+<text x="124" y="585.0" fill="#6B7688" font-size="11" text-anchor="end" dy="0.35em">user</text>
+<text x="124" y="599.0" fill="#6B7688" font-size="11" text-anchor="end" dy="0.35em">(theoretical)</text>
+<rect x="180" y="613.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="312.0" y="626" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRequest</text>
+<rect x="180" y="647.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="312.0" y="660" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> SandboxLeaseGrant</text>
+<rect x="180" y="681.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="312.0" y="694" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
+<rect x="132" y="715.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="264.0" y="728" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> RunTool</text>
+<rect x="180" y="749.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="312.0" y="762" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> CallModel</text>
+<rect x="33" y="712.0" width="91" height="32" rx="4" fill="#1e1f22" stroke="#4A5568"/>
+<text x="78.5" y="721" fill="#6B7688" font-size="11" text-anchor="middle" dy="0.35em">task_queue</text>
+<text x="78.5" y="735" fill="#94A3B8" font-size="11" text-anchor="middle" dy="0.35em">sandbox-{id}</text>
+<rect x="180" y="783.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="312.0" y="796" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Sandbox.LeaseRelease</text>
+<rect x="180" y="817.0" width="264" height="26" rx="6" fill="#272a30" stroke="#4A5568"/>
+<text x="312.0" y="830" fill="#CBD5E1" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">close</tspan> complete</text>
+<rect x="516" y="171.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="648.0" y="184" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">on signal</tspan> Request</text>
+<rect x="516" y="205.0" width="264" height="26" rx="6" fill="#353144" stroke="#6B5B95"/>
+<text x="648.0" y="218" fill="#D4C8F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">detach workflow</tspan> Sandbox</text>
+<rect x="516" y="239.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="648.0" y="252" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> Agent.SandboxAssign</text>
+<rect x="564.0" y="276" width="168" height="20" fill="#23232a"/>
+<text x="648.0" y="286" fill="#6B7688" font-size="12" text-anchor="middle" dy="0.35em">↺ await next Request</text>
+<rect x="852" y="239.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="984.0" y="252" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> helm.RenderChart</text>
+<rect x="852" y="273.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="984.0" y="286" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> kube.Create</text>
+<rect x="852" y="307.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="984.0" y="320" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> kube.Ready</text>
+<rect x="852" y="341.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="984.0" y="354" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> LeaseRequest</text>
+<rect x="852" y="375.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="984.0" y="388" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> SandboxLeaseGrant</text>
+<rect x="852" y="511.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="984.0" y="524" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> LeaseRelease</text>
+<rect x="852" y="545.0" width="264" height="26" rx="6" fill="#373224" stroke="#B8962E"/>
+<text x="984.0" y="558" fill="#F0D58C" font-size="12" text-anchor="middle" dy="0.35em">timer(grace)</text>
+<rect x="852" y="613.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="984.0" y="626" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">on signal</tspan> LeaseRequest</text>
+<rect x="852" y="647.0" width="264" height="26" rx="6" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="984.0" y="660" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">signal</tspan> SandboxLeaseGrant</text>
+<rect x="852" y="783.0" width="264" height="26" rx="6" fill="#262427" stroke="#EF9A9A" stroke-dasharray="4 3"/>
+<text x="984.0" y="796" fill="#FCA5A5" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">await signal</tspan> LeaseRelease</text>
+<rect x="852" y="817.0" width="264" height="26" rx="6" fill="#373224" stroke="#B8962E"/>
+<text x="984.0" y="830" fill="#F0D58C" font-size="12" text-anchor="middle" dy="0.35em">timer(grace)</text>
+<rect x="852" y="851.0" width="264" height="26" rx="6" fill="#27313d" stroke="#4A7BA7"/>
+<text x="984.0" y="864" fill="#A8D4F0" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">activity</tspan> kube.Delete</text>
+<rect x="852" y="885.0" width="264" height="26" rx="6" fill="#272a30" stroke="#4A5568"/>
+<text x="984.0" y="898" fill="#CBD5E1" font-size="12" text-anchor="middle" dy="0.35em"><tspan font-weight="700">close</tspan> complete</text>
+<path d="M444 184 H514" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="480.0" cy="184" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="480.0" y="184" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">1</text>
+<path d="M780 218 H838" fill="none" stroke="#9D8AD0" stroke-width="1.25" stroke-dasharray="5 4" marker-end="url(#h9D8AD0)"/>
+<circle cx="816.0" cy="218" r="9" fill="#1e1f22" stroke="#9D8AD0"/>
+<text x="816.0" y="218" fill="#9D8AD0" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">2</text>
+<path d="M516 252 H446" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="480.0" cy="252" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="480.0" y="252" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">3</text>
+<path d="M444 354 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="480.0" cy="354" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="480.0" y="354" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">4</text>
+<path d="M852 388 H446" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="816.0" cy="388" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="816.0" y="388" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">5</text>
+<path d="M444 524 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="480.0" cy="524" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="480.0" y="524" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">6</text>
+<path d="M132 592 H178" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="156.0" cy="592" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="156.0" y="592" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">7</text>
+<path d="M444 626 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="480.0" cy="626" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="480.0" y="626" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">8</text>
+<path d="M852 660 H446" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="816.0" cy="660" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="816.0" y="660" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">9</text>
+<path d="M444 796 H850" fill="none" stroke="#EF9A9A" stroke-width="1.25" marker-end="url(#hEF9A9A)"/>
+<circle cx="480.0" cy="796" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="480.0" y="796" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">10</text>
+<rect x="24" y="959" width="18" height="14" rx="3" fill="#353144" stroke="#6B5B95"/>
+<text x="50" y="966" fill="#94A3B8" font-size="11" dy="0.35em">workflow</text>
+<rect x="130.8" y="959" width="18" height="14" rx="3" fill="#3b3033" stroke="#EF9A9A"/>
+<text x="156.8" y="966" fill="#94A3B8" font-size="11" dy="0.35em">send signal</text>
+<rect x="257.4" y="959" width="18" height="14" rx="3" fill="#262427" stroke="#EF9A9A" stroke-dasharray="3 2"/>
+<text x="283.4" y="966" fill="#94A3B8" font-size="11" dy="0.35em">receive signal</text>
+<rect x="403.79999999999995" y="959" width="18" height="14" rx="3" fill="#27313d" stroke="#4A7BA7"/>
+<text x="429.79999999999995" y="966" fill="#94A3B8" font-size="11" dy="0.35em">activity</text>
+<rect x="510.59999999999997" y="959" width="18" height="14" rx="3" fill="#373224" stroke="#B8962E"/>
+<text x="536.5999999999999" y="966" fill="#94A3B8" font-size="11" dy="0.35em">timer</text>
+<rect x="604.5999999999999" y="959" width="4" height="14" rx="2" fill="#6FBF9A"/>
+<text x="623.5999999999999" y="966" fill="#94A3B8" font-size="11" dy="0.35em">lease held</text>
+<path d="M717.5999999999999 966 H747.5999999999999" fill="none" stroke="#9D8AD0" stroke-width="1.25" stroke-dasharray="5 4" marker-end="url(#h9D8AD0)"/>
+<text x="757.5999999999999" y="966" fill="#94A3B8" font-size="11" dy="0.35em">child start</text>
+<circle cx="867.1999999999999" cy="966" r="9" fill="#1e1f22" stroke="#EF9A9A"/>
+<text x="867.1999999999999" y="966" fill="#EF9A9A" font-size="10" font-weight="700" text-anchor="middle" dy="0.35em">1</text>
+<text x="884.1999999999999" y="966" fill="#94A3B8" font-size="11" dy="0.35em">message order</text>
 </svg>
