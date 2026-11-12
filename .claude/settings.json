@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "temporal-architect": {
+      "source": {
+        "source": "github",
+        "repo": "jmbarzee/temporal-architect-dist"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "temporal-architect@temporal-architect": true
+  }
+}
