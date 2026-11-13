@@ -15,6 +15,10 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 	signal SandboxLeaseDeny(reason: Reason):
 		denied = reason
 
+	# The user's next prompt, once the model has answered the last one.
+	signal UserPrompt(prompt: Prompt):
+		pass
+
 	# Outlasts the Sandbox's own creation caps, so a slow sandbox answers first.
 	leaseWait = 15m
 
@@ -63,6 +67,23 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 		# The model declaring done ends the run.
 		if (reply.done):
 			break
+
+		# A reply without tool calls answers the prompt: hold no lease while the
+		# user reads it, then lease the same sandbox again for their next one.
+		# A user slower than the sandbox's grace finds it gone; the timer says so.
+		if (reply.toolCalls == null):
+			signal sandbox.Sandbox.LeaseRelease(workflow.id)
+				id: "sandbox/{lease.sandboxId}"
+			await signal UserPrompt -> prompt
+			context = context + prompt
+			signal sandbox.Sandbox.LeaseRequest(workflow.id)
+				id: "sandbox/{lease.sandboxId}"
+			await one:
+				signal SandboxLeaseGrant:
+				signal SandboxLeaseDeny:
+					close fail(denied)
+				timer(leaseWait):
+					close fail(LeaseTimeout{"no answer to the lease request"})
 
 		# Tool calls run one at a time.
 		for (call in reply.toolCalls):
