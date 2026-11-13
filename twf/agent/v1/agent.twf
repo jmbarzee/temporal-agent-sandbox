@@ -91,7 +91,6 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 					close fail(denied)
 				timer(leaseWait):
 					close fail(LeaseTimeout{"no answer to the lease request"})
-			continue
 
 		# Tool calls run one at a time.
 		for (call in reply.toolCalls):
