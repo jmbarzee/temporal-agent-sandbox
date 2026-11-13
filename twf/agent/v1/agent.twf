@@ -5,15 +5,24 @@ package agent
 import "github.com/jmbarzee/temporal-agent-sandbox/twf/sandbox/v1"
 
 workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Resume) -> (Result):
+	state:
+		# Held from a grant to the release before the next prompt.
+		condition leased
+
 	signal SandboxAssign(id: SandboxId):
 		assigned = id
 
 	signal SandboxLeaseGrant(granted: Lease):
 		lease = granted
 		pending = false
+		set leased
 
 	signal SandboxLeaseDeny(reason: Reason):
 		denied = reason
+
+	# The user's next prompt, once the model has answered the last one.
+	signal UserPrompt(prompt: Prompt):
+		pass
 
 	# Outlasts the Sandbox's own creation caps, so a slow sandbox answers first.
 	leaseWait = 15m
@@ -38,6 +47,7 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 	else:
 		lease = resume.lease
 		pending = false
+		set leased
 		context = resume.context
 	turns = 0
 
@@ -64,6 +74,25 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 		if (reply.done):
 			break
 
+		# A reply without tool calls answers the prompt: hold no lease while the
+		# user reads it, then lease the same sandbox again for their next one.
+		# A user slower than the sandbox's grace finds it gone; the timer says so.
+		if (reply.toolCalls == null):
+			unset leased
+			signal sandbox.Sandbox.LeaseRelease(workflow.id)
+				id: "sandbox/{lease.sandboxId}"
+			await signal UserPrompt -> prompt
+			context = context + prompt
+			signal sandbox.Sandbox.LeaseRequest(workflow.id)
+				id: "sandbox/{lease.sandboxId}"
+			await one:
+				signal SandboxLeaseGrant:
+				signal SandboxLeaseDeny:
+					close fail(denied)
+				timer(leaseWait):
+					close fail(LeaseTimeout{"no answer to the lease request"})
+			continue
+
 		# Tool calls run one at a time.
 		for (call in reply.toolCalls):
 			# schedule_to_start: no poller means the sandbox is lost.
@@ -82,6 +111,7 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 			# Continue as new to bound history; the context carries over whole.
 			close continue_as_new(instructions, task, tools, Resume{lease, context})
 
+	unset leased
 	signal sandbox.Sandbox.LeaseRelease(workflow.id)
 		id: "sandbox/{lease.sandboxId}"
 	close complete(Result{context})
