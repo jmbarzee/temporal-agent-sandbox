@@ -5,17 +5,12 @@ package agent
 import "github.com/jmbarzee/temporal-agent-sandbox/twf/sandbox/v1"
 
 workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Resume) -> (Result):
-	state:
-		# Held from a grant to the release before the next prompt.
-		condition leased
-
 	signal SandboxAssign(id: SandboxId):
 		assigned = id
 
 	signal SandboxLeaseGrant(granted: Lease):
 		lease = granted
 		pending = false
-		set leased
 
 	signal SandboxLeaseDeny(reason: Reason):
 		denied = reason
@@ -47,7 +42,6 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 	else:
 		lease = resume.lease
 		pending = false
-		set leased
 		context = resume.context
 	turns = 0
 
@@ -78,7 +72,6 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 		# user reads it, then lease the same sandbox again for their next one.
 		# A user slower than the sandbox's grace finds it gone; the timer says so.
 		if (reply.toolCalls == null):
-			unset leased
 			signal sandbox.Sandbox.LeaseRelease(workflow.id)
 				id: "sandbox/{lease.sandboxId}"
 			await signal UserPrompt -> prompt
@@ -110,7 +103,6 @@ workflow Agent(instructions: Instructions, task: Task, tools: Tools, resume: Res
 			# Continue as new to bound history; the context carries over whole.
 			close continue_as_new(instructions, task, tools, Resume{lease, context})
 
-	unset leased
 	signal sandbox.Sandbox.LeaseRelease(workflow.id)
 		id: "sandbox/{lease.sandboxId}"
 	close complete(Result{context})
